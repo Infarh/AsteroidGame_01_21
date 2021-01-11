@@ -15,6 +15,9 @@ namespace ConsoleTest
             //v1.X = 5;
             //v1.Y = 7;
 
+            Vector2DClass v11 = v1;
+            v11.Y = 77;
+
             Vector2DClass v2 = new Vector2DClass(10, 15);
             //v2.X = 10;
             //v2.Y = 15;
@@ -30,6 +33,12 @@ namespace ConsoleTest
             //double length = v4;
             //int length_int = (int) v4;
 
+            Vector2D vv1 = new Vector2D();
+            vv1.X = 7;
+            vv1.Y = 10;
+
+            Vector2D vv11 = vv1;
+            vv11.Y = 77;
 
             v2 = new Vector2DClass();
             //v2.X = 33;
@@ -131,6 +140,25 @@ namespace ConsoleTest
         public static explicit operator int(Vector2DClass v)
         {
             return (int)v.Length;
+        }
+    }
+
+    struct Vector2D
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+
+        public double Length => Math.Sqrt(X * X + Y * Y);
+
+        //public Vector2D()
+        //{
+
+        //}
+
+        public Vector2D(double X, double Y)
+        {
+            this.X = X;
+            this.Y = Y;
         }
     }
 }

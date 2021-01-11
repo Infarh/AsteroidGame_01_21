@@ -6,6 +6,24 @@ namespace ConsoleTest
     {
         static void Main(string[] args)
         {
+            //Object obj = new Vector2DClass();
+
+            Printer printer = new Printer();
+
+            string printer_str = printer.ToString();
+            Console.WriteLine(printer);
+
+            printer.Print("123");
+
+            printer = new PrefixPrinter("!!!");
+
+            printer.Print("321");
+
+            printer_str = printer.ToString();
+            Console.WriteLine(printer);
+
+            Console.ReadLine();
+
             Player p = new Player("Иван", "Иванов");
 
             //Vector2DClass unit = Vector2DClass.Unit;

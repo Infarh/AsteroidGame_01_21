@@ -6,6 +6,21 @@ namespace ConsoleTest
     {
         static void Main(string[] args)
         {
+            //DateTime? time = null;
+
+            //if (time != null)
+            //{
+            //    DateTime t = (DateTime) time;
+            //    Console.WriteLine(time);
+            //}
+
+            //if (time.HasValue)
+            //{
+            //    //DateTime t = time.GetValueOrDefault();
+            //    DateTime t = time.Value;
+            //    Console.WriteLine(time);
+            //}
+
             //Object obj = new Vector2DClass();
 
             Printer printer = new Printer();

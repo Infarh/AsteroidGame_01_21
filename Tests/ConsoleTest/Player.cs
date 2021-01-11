@@ -30,7 +30,7 @@ namespace ConsoleTest
 
         public string Name { get; /*private*/ set; }
         public string Surname { /*internal*/ get; set; }
-        public DateTime Birthday { get; set; } = DateTime.Now;
+        public DateTime? Birthday { get; set; } = null;
 
         public Player()
         {

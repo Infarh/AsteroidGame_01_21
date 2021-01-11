@@ -6,6 +6,9 @@ namespace ConsoleTest
     {
         static void Main(string[] args)
         {
+            //Vector2DClass unit = Vector2DClass.Unit;
+            //Vector2DClass zero = Vector2DClass.Zero;
+
             Vector2DClass v1 = new Vector2DClass(5, 7);
             //v1.X = 5;
             //v1.Y = 7;
@@ -18,7 +21,10 @@ namespace ConsoleTest
             //v2.X = 33;
             //v2.Y = 55;
 
-            Console.WriteLine("Вектор x:{0} y:{1}", v1.X, v1.Y);
+            v1.SetX(10);
+            v1.Y = 15;
+
+            Console.WriteLine("Вектор x:{0} y:{1}", v1.GetX(), v1.Y);
         }
     }
 
@@ -36,15 +42,38 @@ namespace ConsoleTest
         //protected
         //internal
         //internal protected 
-        private double X;
-        private double Y;
+        private double _X;
+
+        public double GetX()
+        {
+            return _X;
+        }
+
+        public void SetX(double value)
+        {
+            _X = value;
+        }
+
+        private double _Y;
+
+        public double Y
+        {
+            get
+            {
+                return _Y;
+            }
+            set
+            {
+                _Y = value;
+            }
+        }
 
         public Vector2DClass() { }
 
         public Vector2DClass(double X, double Y)
         {
-            this.X = X;
-            this.Y = Y;
+            _X = X;
+            _Y = Y;
         }
     }
 }

@@ -17,6 +17,8 @@ namespace AsteroidGame
 
             game_form.Show();
 
+            Game.Initialize(game_form);
+            Game.Draw();
 
             //System.Threading.Thread.Sleep(10000);
             Application.Run(game_form);

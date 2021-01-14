@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+
 using AsteroidGame.VisualObjects;
 
 namespace AsteroidGame
@@ -38,24 +40,25 @@ namespace AsteroidGame
 
         public static void Load()
         {
-            const int visual_objects_count = 30;
-            __GameObjects = new VisualObject[visual_objects_count];
+            var game_objects = new List<VisualObject>();
 
-            for (var i = 0; i < __GameObjects.Length / 2; i++)
+            for (var i = 0; i < 15; i++)
             {
-                __GameObjects[i] = new VisualObject(
+                game_objects.Add(new Asteroid(
                     new Point(600, i * 20),
                     new Point(15 - i, 20 - i),
-                    new Size(20, 20));
+                    20));
             }
 
-            for (var i = __GameObjects.Length / 2; i < __GameObjects.Length; i++)
+            for (var i = 0; i < 15; i++)
             {
-                __GameObjects[i] = new Star(
+                game_objects.Add(new Star(
                     new Point(600, (int)(i / 2.0 * 20)),
-                    new Point( - i, 0),
-                    10);
+                    new Point(-i, 0),
+                    10));
             }
+
+            __GameObjects = game_objects.ToArray();
         }
 
         public static void Draw()
@@ -63,9 +66,6 @@ namespace AsteroidGame
             Graphics g = __Buffer.Graphics;
 
             g.Clear(Color.Black);
-
-            //g.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
-            //g.FillEllipse(Brushes.Red, new Rectangle(100, 100, 200, 200));
 
             foreach (var game_object in __GameObjects)
                 game_object.Draw(g);

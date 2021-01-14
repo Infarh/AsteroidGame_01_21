@@ -2,8 +2,13 @@
 
 namespace ConsoleTest.Loggers
 {
-    internal abstract class Logger
+    internal abstract class Logger : ILogger
     {
+        void ILogger.TestMethod()
+        {
+            Console.WriteLine("Тестовый метод");
+        }
+
         public abstract void Log(string Message);
 
         public void LogInformation(string Message)

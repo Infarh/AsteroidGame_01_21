@@ -7,11 +7,23 @@ namespace ConsoleTest
     {
         private static int _X = 5;
         private static int _Y = 0;
-        private static Logger __Logger;
+        private static ILogger __Logger;
 
         static void Main(string[] args)
         {
-            __Logger = new TextFileLogger("test.log");
+            var student = new Student
+            {
+                Surname = "Иванов",
+                Name = "Иван"
+            };
+
+            Console.WriteLine(student);
+
+            //__Logger = new TextFileLogger("test.log");
+            //__Logger = new ConsoleLogger();
+            //__Logger = new CombineLogger(new ConsoleLogger(), new TextFileLogger("test.log"));
+            __Logger = student;
+
 
             __Logger.LogInformation("Приложение запущено");
 

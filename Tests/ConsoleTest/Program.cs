@@ -1,104 +1,85 @@
 ﻿using System;
-using System.Collections.Generic;
-
-using ConsoleTest.Loggers;
+using System.IO;
+using System.Linq;
+using ConsoleTest.Service;
 
 namespace ConsoleTest
 {
     class Program
     {
-        private static int _X = 5;
-        private static int _Y = 0;
-        private static ILogger __Logger;
+        private static readonly Random __Random = new Random();
+
+        private static void RateStudent(Student student)
+        {
+            student.Ratings = __Random.GetValues(__Random.Next(3, 7), 1, 6);
+        }
+
+        private static void PrintStudent(Student student)
+        {
+            Console.WriteLine("Студент:{0}", student);
+        }
 
         static void Main(string[] args)
         {
-            var student = new Student
-            {
-                Surname = "Иванов",
-                Name = "Иван"
-            };
+            var decanate = new Decanate();
 
-            Console.WriteLine(student);
+            //decanate.SubscribeToAdd(student => Console.WriteLine("Поступил новый студент {0}", student));
 
-            //__Logger = new TextFileLogger("test.log");
-            //__Logger = new ConsoleLogger();
-            //__Logger = new CombineLogger(new ConsoleLogger(), new TextFileLogger("test.log"));
-            __Logger = student;
-
-
-            __Logger.LogInformation("Приложение запущено");
-
-            try
-            {
-                var z = _X / _Y;
-            }
-            catch (DivideByZeroException)
-            {
-                __Logger.LogError($"Ошибка при делении {_X} на 0");
-            }
-
-            var students = new List<Student>();
+            //decanate.ItemAdded += PrintStudent;
+            //decanate.ItemAdded += student => PrintStudent(student);
+            decanate.ItemAdded += (storage, student) => PrintStudent(student);
 
             var rnd = new Random();
-            for (var i = 1; i <= 10; i++)
+
+            const int students_count = 100;
+
+            for (var i = 1; i <= students_count; i++)
             {
-                students.Add(new Student
+                var student = new Student
                 {
+                    Id = i,
                     Surname = $"Фамилия-{i}",
                     Name = $"Имя-{i}",
-                    Rating = rnd.Next(1, 6)
-                });
+                    Patronymic = $"Отчество-{i}",
+                    //Ratings = RandomExtensions.GetValues(rnd, rnd.Next(10,21), 2, 6)
+                    Ratings = rnd.GetValues(rnd.Next(10, 21), 2, 6)
+                };
+
+                decanate.Add(student);
             }
 
-            students.Sort();
+            StorageProcessor<Student> student_processor = RateStudent;
+            student_processor += PrintStudent;
 
-            if (!students.Contains(student))
+            //var student_printer = new StudentPrinter("Деканат:");
+            //decanate.Process(student_printer.Print);
+
+            //decanate.Process(student => Console.WriteLine("Lambda:{0}", student));
+
+            const string data_file_name = "students.txt";
+            decanate.SaveToFile(data_file_name);
+
+            var new_decanate = new Decanate();
+
+            new_decanate.LoadFromFile(data_file_name);
+
+            //foreach (var student in new_decanate)
+            //    Console.WriteLine(student);
+
+            var best_students = new_decanate.Where(s => s.AverageRating > 4).ToArray();
+            var last_students = new_decanate.Where(s => s.AverageRating < 3).ToArray();
+
+            var data_file = new FileInfo("students.txt");
+
+            foreach (var line in data_file.GetLines())
             {
-                Console.WriteLine("Журналист отсутствует в списке!");
+                if (line.Contains("Отчество-30"))
+                {
+                    Console.WriteLine(line);
+                    break;
+                }
             }
 
-            //TextFileLogger text_logger = null;
-            //try
-            //{
-            //    text_logger = new TextFileLogger("test2.log");
-
-            //    text_logger.LogInformation("Info!");
-            //    text_logger.LogWarning("Warn!");
-            //    text_logger.LogError("Err!");
-            //}
-            //finally
-            //{
-            //    if (text_logger != null)
-            //        text_logger.Dispose();
-            //}
-
-            //using (var text_logger = new TextFileLogger("test2.log"))
-            //{
-            //    text_logger.LogInformation("Info!");
-            //    text_logger.LogWarning("Warn!");
-            //    text_logger.LogError("Err!");
-            //}
-
-            try
-            {
-                using var text_logger = new TextFileLogger("test2.log");
-                text_logger.LogInformation("Info!");
-                text_logger.LogWarning("Warn!");
-                text_logger.LogError("Err!");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            
-            Console.WriteLine("Нажмите Enter для выхода.");
-            Console.ReadLine();
-
-            __Logger.LogInformation("Работа приложения завершена");
-
-            __Logger.Flush();
         }
     }
 }

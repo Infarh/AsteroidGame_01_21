@@ -23,6 +23,12 @@ namespace ConsoleTest
         {
             var decanate = new Decanate();
 
+            //decanate.SubscribeToAdd(student => Console.WriteLine("Поступил новый студент {0}", student));
+
+            //decanate.ItemAdded += PrintStudent;
+            //decanate.ItemAdded += student => PrintStudent(student);
+            decanate.ItemAdded += (storage, student) => PrintStudent(student);
+
             var rnd = new Random();
 
             const int students_count = 100;
@@ -48,7 +54,7 @@ namespace ConsoleTest
             //var student_printer = new StudentPrinter("Деканат:");
             //decanate.Process(student_printer.Print);
 
-            decanate.Process(student => Console.WriteLine("Lambda:{0}", student));
+            //decanate.Process(student => Console.WriteLine("Lambda:{0}", student));
 
             const string data_file_name = "students.txt";
             decanate.SaveToFile(data_file_name);

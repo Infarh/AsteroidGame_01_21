@@ -8,6 +8,9 @@ namespace ConsoleTest
 
     internal abstract class Storage<TItem> : IEnumerable<TItem>
     {
+        //public event Action<TItem> ItemAdded; 
+        public event EventHandler<TItem> ItemAdded; 
+
         protected readonly List<TItem> _Items = new List<TItem>();
 
         public virtual int Count => _Items.Count;
@@ -29,6 +32,8 @@ namespace ConsoleTest
         {
             if (_Items.Contains(item)) return;
             _Items.Add(item);
+
+            ItemAdded?.Invoke(this, item);
         }
 
         public virtual bool Remove(TItem item)

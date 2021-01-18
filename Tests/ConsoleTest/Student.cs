@@ -14,6 +14,22 @@ namespace ConsoleTest
 
         public List<int> Ratings { get; set; } = new List<int>();
 
-        public override string ToString() => $"{Surname} {Name} {Patronymic}";
+        public double AverageRating
+        {
+            get
+            {
+                if (Ratings is null || Ratings.Count == 0)
+                    return double.NaN;
+
+                var result = 0;
+
+                foreach (var rating in Ratings)
+                    result += rating;
+
+                return (double)result / Ratings.Count;
+            }
+        }
+
+        public override string ToString() => $"{Surname} {Name} {Patronymic} rating:{AverageRating:0.0##}";
     }
 }

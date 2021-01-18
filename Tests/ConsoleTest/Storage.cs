@@ -2,9 +2,9 @@
 
 namespace ConsoleTest
 {
-    abstract class Storage<TItem>
+    internal abstract class Storage<TItem>
     {
-        private readonly List<TItem> _Items = new List<TItem>();
+        protected readonly List<TItem> _Items = new List<TItem>();
 
         public virtual int Count => _Items.Count;
 

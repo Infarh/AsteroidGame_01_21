@@ -7,6 +7,18 @@ namespace ConsoleTest
 {
     class Program
     {
+        private static readonly Random __Random = new Random();
+
+        private static void RateStudent(Student student)
+        {
+            student.Ratings = __Random.GetValues(__Random.Next(3, 7), 1, 6);
+        }
+
+        private static void PrintStudent(Student student)
+        {
+            Console.WriteLine("Студент:{0}", student);
+        }
+
         static void Main(string[] args)
         {
             var decanate = new Decanate();
@@ -29,6 +41,12 @@ namespace ConsoleTest
 
                 decanate.Add(student);
             }
+
+            StorageProcessor<Student> student_processor = RateStudent;
+            student_processor += PrintStudent;
+
+            var student_printer = new StudentPrinter("Деканат:");
+            decanate.Process(student_printer.Print);
 
             const string data_file_name = "students.txt";
             decanate.SaveToFile(data_file_name);

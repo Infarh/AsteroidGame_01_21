@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace ConsoleTest
 {
+    internal delegate void StorageProcessor<TItem>(TItem Item);
+
     internal abstract class Storage<TItem> : IEnumerable<TItem>
     {
         protected readonly List<TItem> _Items = new List<TItem>();
@@ -40,6 +42,12 @@ namespace ConsoleTest
         public abstract void SaveToFile(string FileName);
 
         public virtual void LoadFromFile(string FileName) => Clear();
+
+        public void Process(StorageProcessor<TItem> Processor)
+        {
+            foreach (var item in _Items)
+                Processor(item);
+        }
 
         public IEnumerator<TItem> GetEnumerator() => _Items.GetEnumerator();
 

@@ -29,4 +29,17 @@ namespace ConsoleTest
             return base.ToString() + " с префиксом";
         }
     }
+
+    internal class StudentPrinter : PrefixPrinter
+    {
+        public StudentPrinter(string Prefix) : base(Prefix)
+        {
+
+        }
+
+        public void Print(Student student)
+        {
+            Print($"Студент - {student}");
+        }
+    }
 }

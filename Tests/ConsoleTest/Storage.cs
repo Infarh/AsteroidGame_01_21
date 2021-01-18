@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace ConsoleTest
 {
-    internal abstract class Storage<TItem>
+    internal abstract class Storage<TItem> : IEnumerable<TItem>
     {
         protected readonly List<TItem> _Items = new List<TItem>();
 
@@ -38,9 +39,10 @@ namespace ConsoleTest
 
         public abstract void SaveToFile(string FileName);
 
-        public virtual void LoadFromFile(string FileName)
-        {
-            Clear();
-        }
+        public virtual void LoadFromFile(string FileName) => Clear();
+
+        public IEnumerator<TItem> GetEnumerator() => _Items.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

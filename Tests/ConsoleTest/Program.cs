@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.IO;
+using System.Linq;
 using ConsoleTest.Service;
 
 namespace ConsoleTest
@@ -18,6 +19,7 @@ namespace ConsoleTest
             {
                 var student = new Student
                 {
+                    Id = i,
                     Surname = $"Фамилия-{i}",
                     Name = $"Имя-{i}",
                     Patronymic = $"Отчество-{i}",
@@ -28,12 +30,30 @@ namespace ConsoleTest
                 decanate.Add(student);
             }
 
-            const string data_file = "students.txt";
-            decanate.SaveToFile(data_file);
+            const string data_file_name = "students.txt";
+            decanate.SaveToFile(data_file_name);
 
             var new_decanate = new Decanate();
 
-            new_decanate.LoadFromFile(data_file);
+            new_decanate.LoadFromFile(data_file_name);
+
+            //foreach (var student in new_decanate)
+            //    Console.WriteLine(student);
+
+            var best_students = new_decanate.Where(s => s.AverageRating > 4).ToArray();
+            var last_students = new_decanate.Where(s => s.AverageRating < 3).ToArray();
+
+            var data_file = new FileInfo("students.txt");
+
+            foreach (var line in data_file.GetLines())
+            {
+                if (line.Contains("Отчество-30"))
+                {
+                    Console.WriteLine(line);
+                    break;
+                }
+            }
+
         }
     }
 }

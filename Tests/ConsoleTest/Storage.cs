@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace ConsoleTest
@@ -43,8 +44,18 @@ namespace ConsoleTest
 
         public virtual void LoadFromFile(string FileName) => Clear();
 
-        public void Process(StorageProcessor<TItem> Processor)
+        //public void Process(StorageProcessor<TItem> Processor)
+        //{
+        //    foreach (var item in _Items)
+        //        Processor(item);
+        //}
+
+        public void Process(Action<TItem> Processor)
         {
+            //Func<string, int> get_length = str =>
+            //{
+            //    return str.Length;
+            //}; 
             foreach (var item in _Items)
                 Processor(item);
         }

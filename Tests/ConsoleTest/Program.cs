@@ -45,8 +45,10 @@ namespace ConsoleTest
             StorageProcessor<Student> student_processor = RateStudent;
             student_processor += PrintStudent;
 
-            var student_printer = new StudentPrinter("Деканат:");
-            decanate.Process(student_printer.Print);
+            //var student_printer = new StudentPrinter("Деканат:");
+            //decanate.Process(student_printer.Print);
+
+            decanate.Process(student => Console.WriteLine("Lambda:{0}", student));
 
             const string data_file_name = "students.txt";
             decanate.SaveToFile(data_file_name);

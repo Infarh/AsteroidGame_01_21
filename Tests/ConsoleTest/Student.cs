@@ -12,6 +12,10 @@ namespace ConsoleTest
 
         public string Patronymic { get; init; }
 
+        public int GroupId { get; set; }
+
+        //public Group Group { get; set; }
+
         public List<int> Ratings { get; set; } = new List<int>();
 
         public double AverageRating

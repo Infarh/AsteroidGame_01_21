@@ -23,6 +23,8 @@ namespace AsteroidGame.VisualObjects
 
         public override void Draw(Graphics g)
         {
+            if (!Enabled) return;
+
             var rect = Rect;
             g.FillEllipse(Brushes.Blue, rect);
             g.DrawEllipse(Pens.Yellow, rect);

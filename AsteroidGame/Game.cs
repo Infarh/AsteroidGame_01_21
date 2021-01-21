@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 using AsteroidGame.VisualObjects;
@@ -15,7 +16,7 @@ namespace AsteroidGame
         private static VisualObject[] __GameObjects;
 
         private static Timer __Timer;
-        private static Bullet __Bullet;
+        private static List<Bullet> __Bullets = new();
         private static SpaceShip __SpaceShip;
 
         public static int Width { get; set; }
@@ -43,7 +44,11 @@ namespace AsteroidGame
             switch (E.KeyCode)
             {
                 case Keys.ControlKey:
-                    __Bullet = new Bullet(__SpaceShip.Rect.Y);
+                    var disabled_bullet = __Bullets.FirstOrDefault(b => !b.Enabled);
+                    if (disabled_bullet != null)
+                        disabled_bullet.Reset(__SpaceShip.Rect.Y);
+                    else
+                        __Bullets.Add(new Bullet(__SpaceShip.Rect.Y));
                     break;
 
                 case Keys.Up:
@@ -88,7 +93,7 @@ namespace AsteroidGame
 
             __GameObjects = game_objects.ToArray();
 
-            __Bullet = new Bullet(200);
+            __Bullets.Clear();
             __SpaceShip = new SpaceShip(
                 new Point(10, 400),
                 new Point(5, 5),
@@ -115,9 +120,13 @@ namespace AsteroidGame
                 game_object.Draw(g);
 
             __SpaceShip.Draw(g);
-            __Bullet?.Draw(g);
 
-            if(!__Timer.Enabled) return;
+            //foreach (var bullet in __Bullets)
+            //    bullet.Draw(g);
+
+            __Bullets.ForEach(bullet => bullet.Draw(g));
+
+            if (!__Timer.Enabled) return;
             __Buffer.Render();
         }
 
@@ -126,23 +135,31 @@ namespace AsteroidGame
             foreach (var game_object in __GameObjects)
                 game_object?.Update();
 
-            __Bullet?.Update();
+            __Bullets.ForEach(bullet => bullet.Update());
 
-            for (var i = 0; i < __GameObjects.Length; i++)
+            foreach (var o in __GameObjects.Where(o => o.Enabled))
             {
-                var obj = __GameObjects[i];
+                if (o is not ICollision obj) continue;
 
-                if (obj is ICollision collision_object)
+                if (__SpaceShip.CheckCollision(obj))
                 {
-                    __SpaceShip.CheckCollision(collision_object);
+                    o.Enabled = false;
+                    continue;
+                }
 
-                    if(__Bullet?.CheckCollision(collision_object) != true) continue;
+                //if (__Bullets.Any(b => b.Enabled && b.CheckCollision(obj))) 
+                //    ((VisualObject) obj).Enabled = false;
 
-                    __Bullet = null;
-                    __GameObjects[i] = null;
-                    System.Media.SystemSounds.Beep.Play();
+                foreach (var bullet in __Bullets.Where(b => b.Enabled))
+                {
+                    if (!bullet.CheckCollision(obj)) continue;
+                    o.Enabled = false;
+                    bullet.Enabled = false;
                 }
             }
+
+            foreach (var bullet in __Bullets.Where(b => b.Enabled && b.Rect.X > Width))
+                bullet.Enabled = false;
         }
     }
 }

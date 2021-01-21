@@ -14,5 +14,10 @@ namespace ConsoleTest.Service
 
             return result;
         }
+
+        public static T GetValue<T>(this Random rnd, params T[] items)
+        {
+            return items[rnd.Next(0, items.Length)];
+        }
     }
 }

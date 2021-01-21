@@ -31,5 +31,31 @@ namespace ConsoleTest
         }
 
         public override string ToString() => $"{Surname} {Name} {Patronymic} rating:{AverageRating:0.0##}";
+
+        public override int GetHashCode()
+        {
+            var hash = Id.GetHashCode();
+
+            unchecked
+            {
+                if (Surname != null) hash = (hash * 257) ^ Surname.GetHashCode();
+                if (Name != null) hash = (hash * 257) ^ Name.GetHashCode();
+                if (Patronymic != null) hash = (hash * 257) ^ Patronymic.GetHashCode();
+            }
+
+            return hash;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is null) return false;
+            if (obj.GetType() != typeof(Student)) return false;
+
+            var other = (Student) obj;
+            return Id == other.Id
+                && Surname == other.Surname
+                && Name == other.Name
+                && Patronymic == other.Patronymic;
+        }
     }
 }

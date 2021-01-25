@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsteroidGame", "AsteroidGame\AsteroidGame.csproj", "{4B80C8FD-477F-4850-8E2F-1A77E9C64BF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsteroidGame", "AsteroidGame\AsteroidGame.csproj", "{4B80C8FD-477F-4850-8E2F-1A77E9C64BF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{45D6184B-79EF-41D1-8DF2-823746F00B4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "Tests\ConsoleTest\ConsoleTest.csproj", "{B284D520-59F7-43CA-9133-8395D4A556D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTest", "Tests\ConsoleTest\ConsoleTest.csproj", "{B284D520-59F7-43CA-9133-8395D4A556D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Managment", "Managment", "{8C2B2579-D389-4123-AC15-922D18825B7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayersManagmentWinForms", "Managment\PlayersManagmentWinForms\PlayersManagmentWinForms.csproj", "{78EC8D32-40D6-496F-BF66-AF5C0F709794}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayersManagmentWPF", "Managment\PlayersManagmentWPF\PlayersManagmentWPF.csproj", "{252BDAFA-78BB-41D8-8862-E7C170553D09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +29,22 @@ Global
 		{B284D520-59F7-43CA-9133-8395D4A556D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B284D520-59F7-43CA-9133-8395D4A556D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B284D520-59F7-43CA-9133-8395D4A556D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78EC8D32-40D6-496F-BF66-AF5C0F709794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78EC8D32-40D6-496F-BF66-AF5C0F709794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78EC8D32-40D6-496F-BF66-AF5C0F709794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78EC8D32-40D6-496F-BF66-AF5C0F709794}.Release|Any CPU.Build.0 = Release|Any CPU
+		{252BDAFA-78BB-41D8-8862-E7C170553D09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{252BDAFA-78BB-41D8-8862-E7C170553D09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{252BDAFA-78BB-41D8-8862-E7C170553D09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{252BDAFA-78BB-41D8-8862-E7C170553D09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B284D520-59F7-43CA-9133-8395D4A556D7} = {45D6184B-79EF-41D1-8DF2-823746F00B4B}
+		{78EC8D32-40D6-496F-BF66-AF5C0F709794} = {8C2B2579-D389-4123-AC15-922D18825B7F}
+		{252BDAFA-78BB-41D8-8862-E7C170553D09} = {8C2B2579-D389-4123-AC15-922D18825B7F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AC9648B8-E364-4298-BFE2-763F614931EB}

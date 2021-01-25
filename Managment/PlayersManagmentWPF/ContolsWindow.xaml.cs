@@ -10,27 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PlayersManagmentWPF
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для ContolsWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ContolsWindow : Window
     {
-        public MainWindow()
+        public ContolsWindow()
         {
             InitializeComponent();
-        }
-
-        private void PressMeButton_Click(object sender, RoutedEventArgs e)
-        {
-            DataLabel.Content = "Hello World!";
-
-            //var red_brush = (Brush)Resources["RedBrush"];
-            //DataLabel.Background = red_brush;
         }
     }
 }

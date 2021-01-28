@@ -46,15 +46,14 @@ namespace PlayersManagmentWPF.ViewModels
                .Select(i => new Group
                {
                    Name = $"Группа - {i}",
-                   Students = Enumerable.Range(1, 15)
+                   Students = new(Enumerable.Range(1, 15)
                       .Select(k => new Student
-                      {
-                          LastName = $"Фамилия-{j}",
-                          FirstName = $"Имя-{j}",
-                          Patronymic = $"Отчество-{j++}",
-                          Rating = rnd.Next(1, 6)
-                      })
-                      .ToList()
+                       {
+                           LastName = $"Фамилия-{j}",
+                           FirstName = $"Имя-{j}",
+                           Patronymic = $"Отчество-{j++}",
+                           Rating = rnd.Next(1, 6)
+                       }))
                })
                .ToList();
 

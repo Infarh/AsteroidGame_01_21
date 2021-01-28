@@ -1,8 +1,21 @@
-﻿namespace PlayersManagmentWPF.Models
+﻿using System;
+
+namespace PlayersManagmentWPF.Models
 {
     public class Student
     {
-        public string LastName { get; set; }
+        private string _LastName;
+        public string LastName
+        {
+            get => _LastName;
+            set
+            {
+                _LastName = value;
+                LastNameChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public event EventHandler LastNameChanged;
 
         public string FirstName { get; set; }
 

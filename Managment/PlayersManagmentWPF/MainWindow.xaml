@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:PlayersManagmentWPF.ViewModels"
+        xmlns:c="clr-namespace:PlayersManagmentWPF.Infrastructure.Converters"
         xmlns:local="clr-namespace:PlayersManagmentWPF"
         mc:Ignorable="d"
-        Title="{Binding SelectedGroup.Name}"
+        Title="{Binding SelectedGroup.Name, Converter={StaticResource GetStringLengthConverter}}"
         Height="450" 
         Width="800">
     <Window.DataContext>
@@ -36,7 +37,8 @@
                 <!--<ListView Name="StudentsList" Grid.Row="0" ItemsSource="{Binding SelectedItem.Students, ElementName=StudentGroups}"
                           SelectedItem="{Binding SelectedStudent}"
                           DisplayMemberPath="LastName"/>-->
-                <ListView Name="StudentsList" Grid.Row="0" ItemsSource="{Binding SelectedGroup.Students}"
+                <ListView Name="StudentsList" Grid.Row="0" 
+                          ItemsSource="{Binding SelectedGroup.Students}"
                           SelectedItem="{Binding SelectedStudent}"
                           DisplayMemberPath="LastName"/>
                 <GroupBox Grid.Row="1" Header="Выбранный студент" 

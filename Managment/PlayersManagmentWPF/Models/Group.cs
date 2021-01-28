@@ -1,13 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace PlayersManagmentWPF.Models
 {
-    public class Group
+    public class Group : INotifyPropertyChanged
     {
-        public string Name { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public List<Student> Students { get; set; } = new();
+        private string _Name;
+        public string Name
+        {
+            get => _Name;
+            set
+            {
+                _Name = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+            }
+        }
 
-        //public override string ToString() => Name;
+        public ObservableCollection<Student> Students { get; set; } = new();
     }
 }

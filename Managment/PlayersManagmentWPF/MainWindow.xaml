@@ -5,8 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlayersManagmentWPF"
         mc:Ignorable="d"
-        Title="MainWindow" 
+        Title="{Binding Text, ElementName=CaptionText, UpdateSourceTrigger=PropertyChanged}" 
         Height="450" 
-        Width="800">
+        Width="800" >
+    <Grid>
+        <Slider Name="ValueSlider" Margin="10,15" VerticalAlignment="Top" Value="0.5" Maximum="180" Minimum="-180"/>
+        <TextBlock Text="{Binding Value, ElementName=ValueSlider, StringFormat='Value = {0:0.0#}'}" 
+                   Margin="10,35"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top" 
+                   RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <RotateTransform x:Name="TextValueRotator"/>
+            </TextBlock.RenderTransform>
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="Red"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         From="1" To="0" Duration="0:0:0.5"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         From="0" To="1" Duration="0:0:5"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle"
+                                                     From="0" To="360" Duration="0:0:1"
+                                                     AutoReverse="True"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
 
+        <Slider Name="OpacityValue" HorizontalAlignment="Right" Orientation="Vertical" Margin="20,30"
+                Minimum="0" Maximum="1"/>
+
+        <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="160"
+                 Opacity="{Binding Value, ElementName=OpacityValue}"
+                 Text="{Binding Value, ElementName=ValueSlider}" RenderTransformOrigin="0.5,0.5">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="{Binding Value, ElementName=ValueSlider}"/>
+                    <TranslateTransform x:Name="QWE"/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+
+        <TextBox VerticalAlignment="Bottom" Name="CaptionText"/>
+    </Grid>
 </Window>

@@ -3,74 +3,64 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:PlayersManagmentWPF.ViewModels"
         xmlns:local="clr-namespace:PlayersManagmentWPF"
         mc:Ignorable="d"
-        Title="{Binding Text, ElementName=CaptionText, UpdateSourceTrigger=PropertyChanged}" 
+        Title="{Binding SelectedGroup.Name}"
         Height="450" 
-        Width="800" >
+        Width="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
-        <Slider Name="ValueSlider" Margin="10,15" VerticalAlignment="Top" Value="0.5" Maximum="180" Minimum="-180"/>
-        <TextBlock Text="{Binding Value, ElementName=ValueSlider, StringFormat='Value = {0:0.0#}'}" 
-                   Margin="10,35"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top" 
-                   RenderTransformOrigin="0.5,0.5">
-            <TextBlock.RenderTransform>
-                <RotateTransform x:Name="TextValueRotator"/>
-            </TextBlock.RenderTransform>
-            <TextBlock.Style>
-                <Style TargetType="TextBlock">
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="Red"/>
-                            <Setter Property="FontWeight" Value="Bold"/>
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                         From="1" To="0" Duration="0:0:0.5"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                         From="0" To="1" Duration="0:0:5"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
-                        <EventTrigger RoutedEvent="MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle"
-                                                     From="0" To="360" Duration="0:0:1"
-                                                     AutoReverse="True"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
-
-        <Slider Name="OpacityValue" HorizontalAlignment="Right" Orientation="Vertical" Margin="20,30"
-                Minimum="0" Maximum="1"/>
-
-        <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="160"
-                 Opacity="{Binding Value, ElementName=OpacityValue}"
-                 Text="{Binding Value, ElementName=ValueSlider}" RenderTransformOrigin="0.5,0.5">
-            <TextBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="{Binding Value, ElementName=ValueSlider}"/>
-                    <TranslateTransform x:Name="QWE"/>
-                </TransformGroup>
-            </TextBox.RenderTransform>
-        </TextBox>
-
-        <TextBox VerticalAlignment="Bottom" Name="CaptionText"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="129*"/>
+            <ColumnDefinition Width="671*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Grid.Column="0" Header="Группы">
+            <DockPanel>
+                <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="2">
+                    <Button Content="+" Margin="3" Click="OnAddGroupButtonClick"/>
+                    <Button Content="-" Margin="3" Click="OnRemoveGroupButtonClick"/>
+                </UniformGrid>
+                <ListView Name="StudentGroups" ItemsSource="{Binding StudentGroups}" DisplayMemberPath="Name"
+                          SelectedItem="{Binding SelectedGroup}"/>
+            </DockPanel>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Header="Студенты">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!--<ListView Name="StudentsList" Grid.Row="0" ItemsSource="{Binding SelectedItem.Students, ElementName=StudentGroups}"
+                          SelectedItem="{Binding SelectedStudent}"
+                          DisplayMemberPath="LastName"/>-->
+                <ListView Name="StudentsList" Grid.Row="0" ItemsSource="{Binding SelectedGroup.Students}"
+                          SelectedItem="{Binding SelectedStudent}"
+                          DisplayMemberPath="LastName"/>
+                <GroupBox Grid.Row="1" Header="Выбранный студент" 
+                          DataContext="{Binding SelectedStudent}">
+                    <StackPanel Margin="10">
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Фамилия:" Width="60"/>
+                            <TextBox Width="200" Text="{Binding LastName}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Имя:" Width="60"/>
+                            <TextBox Width="200" Text="{Binding FirstName}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Отчество:" Width="60"/>
+                            <TextBox Width="200" Text="{Binding Patronymic}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Оценка:" Width="60"/>
+                            <TextBox Width="200" Text="{Binding Rating}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>

@@ -6,6 +6,9 @@ using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
+using DatabaseManagment.Data;
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace DatabaseManagment
@@ -74,6 +77,43 @@ namespace DatabaseManagment
 
             UpdateData(table);
 
+            var db_connstion_options = new DbContextOptionsBuilder<PlayersDB>()
+               .UseSqlServer(Configuration.GetConnectionString("EFCore"));
+
+            using var db = new PlayersDB(db_connstion_options.Options);
+
+            db.Database.EnsureCreated();
+
+            if (!db.Players.Any())
+            {
+                for (var i = 1; i <= 10; i++)
+                {
+                    var player = new Data.Player { Name = $"Player-{i}", Sessions = new List<GameSession>() };
+
+                    for (var j = 0; j < 10; j++)
+                    {
+                        var session = new GameSession { Player = player, Scores = rnd.Next(1, 1001) };
+                        player.Sessions.Add(session);
+                    }
+
+                    db.Players.Add(player);
+                }
+                db.SaveChanges();
+            }
+
+            var total_scores = db.GameSessions.Sum(session => session.Scores);
+
+            var player1_total_scores = db.Players.Where(p => p.Name == "Player-5").SelectMany(p => p.Sessions).Sum(s => s.Scores);
+
+            Console.WriteLine();
+
+            var best_players_query = db.Players
+               .Select(p => new { p.Name, TotalScores = p.Sessions.Sum(s => s.Scores) })
+               .OrderByDescending(p => p.TotalScores)
+               .Take(5);
+
+            foreach (var player in best_players_query)
+                Console.WriteLine("{0} - {1}", player.Name, player.TotalScores);
         }
 
         #region ExecuteNonQuery

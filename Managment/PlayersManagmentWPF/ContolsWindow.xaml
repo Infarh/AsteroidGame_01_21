@@ -5,43 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlayersManagmentWPF"
         mc:Ignorable="d"
-        Title="ContolsWindow" Height="450" Width="800">
+        Title="{Binding Text, ElementName=CaptionText, UpdateSourceTrigger=PropertyChanged}" 
+        Height="450" 
+        Width="800" >
     <Grid>
-        <TextBlock Margin="124,83,618,322" Text="Test text" TextWrapping="NoWrap"/>
-        <Label Content="Label" Margin="209,78,467,329" Target="{Binding ElementName=PlayerNameEditor}"/>
-        <TextBox x:Name="PlayerNameEditor" Margin="333,80,347,331" Text="TextBox" TextWrapping="Wrap"/>
-        <Button Content="Button" Margin="488,83,205,322"/>
-        <Border BorderThickness="5" BorderBrush="#FF0023FF" Margin="86,193,347,105" CornerRadius="10,10,10,10">
-            <TabControl>
-                <TabItem Header="Заголовок">
-                    <Button Margin="20">Нажми меня</Button>
-                </TabItem>
-            </TabControl>
-        </Border>
-        <ComboBox Margin="326,135,354,273" Width="120" d:LayoutOverrides="HorizontalAlignment">
-            <ComboBoxItem>123</ComboBoxItem>
-            <ComboBoxItem>qwe</ComboBoxItem>
-            <ComboBoxItem>ASD</ComboBoxItem>
-        </ComboBox>
-        <ListBox Margin="481,202,198,114" Width="121">
-            <ListBoxItem>1</ListBoxItem>
-            <ListBoxItem>2</ListBoxItem>
-            <ListBoxItem>
-                <ProgressBar Width="90" Height="10" Value="30"></ProgressBar>
-            </ListBoxItem>
-        </ListBox>
-        <CheckBox Content="CheckBox" Margin="635,87,69,322"/>
-        <Image Margin="612,148,42,173" Width="146" Source="https://xoxo.ru/wp-content/uploads/2020/12/kot.jpg"/>
-        <RadioButton Content="RadioButton" Margin="631,112,61,299"/>
-        <Ellipse Margin="24,24,701,367" Stroke="Black"/>
-        <Rectangle Margin="10,92,715,297" Stroke="Black" RadiusX="18.667" RadiusY="18.667"/>
-        <Expander Header="Expander" Height="100" Margin="201,24,499,310" Width="100"
-                  IsExpanded="False">
-            <ProgressBar Value="30"></ProgressBar>
-        </Expander>
-        <Slider Margin="24,161,656,246" Width="120"/>
-        <Calendar Margin="612,261,10,23"/>
-        <!--<WebBrowser Height="100" Margin="0,334,0,0" VerticalAlignment="Top" Source="http://www.yandex.ru"/>-->
+        <Slider Name="ValueSlider" Margin="10,15" VerticalAlignment="Top" Value="0.5" Maximum="180" Minimum="-180"/>
+        <TextBlock Text="{Binding Value, ElementName=ValueSlider, StringFormat='Value = {0:0.0#}'}" 
+                   Margin="10,35"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top" 
+                   RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <RotateTransform x:Name="TextValueRotator"/>
+            </TextBlock.RenderTransform>
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="Red"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         From="1" To="0" Duration="0:0:0.5"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         From="0" To="1" Duration="0:0:5"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle"
+                                                     From="0" To="360" Duration="0:0:1"
+                                                     AutoReverse="True"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
 
+        <Slider Name="OpacityValue" HorizontalAlignment="Right" Orientation="Vertical" Margin="20,30"
+                Minimum="0" Maximum="1"/>
+
+        <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="160"
+                 Opacity="{Binding Value, ElementName=OpacityValue}"
+                 Text="{Binding Value, ElementName=ValueSlider}" RenderTransformOrigin="0.5,0.5">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="{Binding Value, ElementName=ValueSlider}"/>
+                    <TranslateTransform x:Name="QWE"/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+
+        <TextBox VerticalAlignment="Bottom" Name="CaptionText"/>
     </Grid>
 </Window>

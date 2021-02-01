@@ -1,36 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+
+using PlayersManagmentWPF.Models;
+using PlayersManagmentWPF.ViewModels;
 
 namespace PlayersManagmentWPF
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         public MainWindow()
         {
             InitializeComponent();
+
+            //DataContext = new MainWindowViewModel();
         }
 
-        private void PressMeButton_Click(object sender, RoutedEventArgs e)
+        private void OnAddGroupButtonClick(object Sender, RoutedEventArgs E)
         {
-            DataLabel.Content = "Hello World!";
+            var model = (MainWindowViewModel)DataContext;
 
-            //var red_brush = (Brush)Resources["RedBrush"];
-            //DataLabel.Background = red_brush;
+            //model.StudentGroups.Add(new Group
+            //{
+            //    Name = $"Группа-{model.StudentGroups.Count + 1}"
+            //});
+            model.AddNewGroup();
+        }
+
+        private void OnRemoveGroupButtonClick(object Sender, RoutedEventArgs E)
+        {
+            var model = (MainWindowViewModel)DataContext;
+
+            //var selected_group = (Group)StudentGroups.SelectedItem;
+            //if(selected_group is null) return;
+
+            //model.StudentGroups.Remove(selected_group);
+            model.RemoveSelectedGroup();
         }
     }
 }

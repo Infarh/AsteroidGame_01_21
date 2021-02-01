@@ -3,74 +3,66 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:PlayersManagmentWPF.ViewModels"
+        xmlns:c="clr-namespace:PlayersManagmentWPF.Infrastructure.Converters"
         xmlns:local="clr-namespace:PlayersManagmentWPF"
         mc:Ignorable="d"
-        Title="MainWindow" 
+        Title="{Binding SelectedGroup.Name, Converter={StaticResource GetStringLengthConverter}}"
         Height="450" 
         Width="800">
-    <Window.Resources>
-       <ResourceDictionary>
-           <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="MainWindowStyles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-       </ResourceDictionary>
-    </Window.Resources>
-    <Grid Background="{StaticResource BlueGradient}">
-        <Button Margin="264,198,331,104"
-                Style="{StaticResource TransparentButton}"
-                Click="PressMeButton_Click" 
-                RenderTransformOrigin="0.5,0.5">
-            <!--<Button.Effect>
-                <BlurEffect Radius="2"/>
-            </Button.Effect>-->
-            <!--<Button.RenderTransform>
-                <RotateTransform Angle="30"/>
-            </Button.RenderTransform>-->
-            <Border BorderThickness="1" BorderBrush="{DynamicResource RedBrush}" CornerRadius="10"
-                    Padding="3">
-                <StackPanel Margin="0,7,10,15">
-                    <Grid>
-                        <TextBlock HorizontalAlignment="Center">100%</TextBlock>
-                        <ProgressBar Width="100" Height="20" IsIndeterminate="True" Opacity="0.6"/>
-                    </Grid>
-                    <TextBlock HorizontalAlignment="Center" Margin="0,3" Foreground="White">Нажми меняdlfhgghklsd</TextBlock>
-                    <TextBox/>
-                </StackPanel>
-            </Border>
-        </Button>
-        <Label Name="DataLabel" Content="..." 
-               Margin="214,104,218,0"
-               VerticalAlignment="Top"
-               FontSize="24" FontWeight="Bold" 
-               HorizontalContentAlignment="Right"
-               >
-            <Label.Foreground>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <LinearGradientBrush.RelativeTransform>
-                        <TransformGroup>
-                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                            <RotateTransform Angle="89.7" CenterY="0.5" CenterX="0.5"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </LinearGradientBrush.RelativeTransform>
-                    <GradientStop Color="#FF0BCD2F"/>
-                    <GradientStop Color="#FFD82525" Offset="1"/>
-                </LinearGradientBrush>
-            </Label.Foreground>
-            <Label.Effect>
-                <DropShadowEffect x:Name="TextShadow"
-                    BlurRadius="2" 
-                    Color="Red" 
-                    Direction="30" 
-                    Opacity="0.8" 
-                    ShadowDepth="20"/>
-            </Label.Effect>
-        </Label>
-        <Button Content="Button" Margin="564,294,58,66" Style="{DynamicResource TransparentButton}"/>
-        <Button Content="Button" Margin="112,55,596,320"/>
-        <Button Content="Button" Margin="66,258,642,116"/>
-        <Button Content="Button" Margin="76,157,632,217"/>
-
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="129*"/>
+            <ColumnDefinition Width="671*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Grid.Column="0" Header="Группы">
+            <DockPanel>
+                <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="2">
+                    <Button Content="+" Margin="3" Click="OnAddGroupButtonClick"/>
+                    <Button Content="-" Margin="3" Click="OnRemoveGroupButtonClick"/>
+                </UniformGrid>
+                <ListView Name="StudentGroups" ItemsSource="{Binding StudentGroups}" DisplayMemberPath="Name"
+                          SelectedItem="{Binding SelectedGroup}"/>
+            </DockPanel>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Header="Студенты">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <!--<ListView Name="StudentsList" Grid.Row="0" ItemsSource="{Binding SelectedItem.Students, ElementName=StudentGroups}"
+                          SelectedItem="{Binding SelectedStudent}"
+                          DisplayMemberPath="LastName"/>-->
+                <ListView Name="StudentsList" Grid.Row="0" 
+                          ItemsSource="{Binding SelectedGroup.Students}"
+                          SelectedItem="{Binding SelectedStudent}"
+                          DisplayMemberPath="LastName"/>
+                <GroupBox Grid.Row="1" Header="Выбранный студент" 
+                          DataContext="{Binding SelectedStudent}">
+                    <StackPanel Margin="10">
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Фамилия:" Width="60"/>
+                            <TextBox Width="200" Text="{Binding LastName}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Имя:" Width="60"/>
+                            <TextBox Width="200" Text="{Binding FirstName}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Отчество:" Width="60"/>
+                            <TextBox Width="200" Text="{Binding Patronymic}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Оценка:" Width="60"/>
+                            <TextBox Width="200" Text="{Binding Rating}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>

@@ -19,6 +19,9 @@ namespace ConsoleTest
 
         static void Main(string[] args)
         {
+            Console.WriteLine("К запросу к WebAPI готов. Нажмите Enter...");
+            Console.ReadLine();
+
             var http = new HttpClient
             {
                 BaseAddress = new Uri(Configuration["WebAPI"])

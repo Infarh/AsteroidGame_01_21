@@ -73,8 +73,8 @@ namespace AsteroidGame.WebAPI.Controllers
             return player.Games;
         }
 
-        [HttpPost("add/{PlayerName}/{Scores}")] // api/players/Ivanov/1000
-        public Game AddGame(string PlayerName, int Scores)
+        [HttpPost("add/{PlayerName}")] // api/players/add/Ivanov
+        public Game AddGame(string PlayerName, [FromBody] int Scores)
         {
             var player = _db.Players.FirstOrDefault(p => p.Name == PlayerName);
             if (player is null)

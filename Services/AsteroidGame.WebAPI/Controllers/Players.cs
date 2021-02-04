@@ -73,5 +73,27 @@ namespace AsteroidGame.WebAPI.Controllers
             return player.Games;
         }
 
+        [HttpPost("add/{PlayerName}/{Scores}")] // api/players/Ivanov/1000
+        public Game AddGame(string PlayerName, int Scores)
+        {
+            var player = _db.Players.FirstOrDefault(p => p.Name == PlayerName);
+            if (player is null)
+                player = new Player
+                {
+                    Name = PlayerName
+                };
+
+            var game = new Game
+            {
+                Player = player,
+                Scores = Scores
+            };
+
+            _db.Games.Add(game);
+            _db.SaveChanges();
+
+            game.Player = null;
+            return game;
+        }
     }
 }

@@ -15,7 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlayersManagmentWinForms", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlayersManagmentWPF", "Managment\PlayersManagmentWPF\PlayersManagmentWPF.csproj", "{252BDAFA-78BB-41D8-8862-E7C170553D09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseManagment", "Managment\DatabaseManagment\DatabaseManagment.csproj", "{F5E5BDEF-73FF-487E-9F51-B63DCEEFDC01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseManagment", "Managment\DatabaseManagment\DatabaseManagment.csproj", "{F5E5BDEF-73FF-487E-9F51-B63DCEEFDC01}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{05AF5E74-519B-491B-A9D4-3D7519907470}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsteroidGame.WebAPI", "Services\AsteroidGame.WebAPI\AsteroidGame.WebAPI.csproj", "{A24FEEEB-B589-4D2D-BFBE-9204E8D400CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +47,10 @@ Global
 		{F5E5BDEF-73FF-487E-9F51-B63DCEEFDC01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5E5BDEF-73FF-487E-9F51-B63DCEEFDC01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5E5BDEF-73FF-487E-9F51-B63DCEEFDC01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A24FEEEB-B589-4D2D-BFBE-9204E8D400CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A24FEEEB-B589-4D2D-BFBE-9204E8D400CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A24FEEEB-B589-4D2D-BFBE-9204E8D400CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A24FEEEB-B589-4D2D-BFBE-9204E8D400CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +60,7 @@ Global
 		{78EC8D32-40D6-496F-BF66-AF5C0F709794} = {8C2B2579-D389-4123-AC15-922D18825B7F}
 		{252BDAFA-78BB-41D8-8862-E7C170553D09} = {8C2B2579-D389-4123-AC15-922D18825B7F}
 		{F5E5BDEF-73FF-487E-9F51-B63DCEEFDC01} = {8C2B2579-D389-4123-AC15-922D18825B7F}
+		{A24FEEEB-B589-4D2D-BFBE-9204E8D400CC} = {05AF5E74-519B-491B-A9D4-3D7519907470}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AC9648B8-E364-4298-BFE2-763F614931EB}

@@ -23,6 +23,13 @@ namespace AsteroidGame
 
             //System.Threading.Thread.Sleep(10000);
             Application.Run(game_form);
+
+            string[] players = {"Иванов", "Петров", "Сидоров" };
+
+            var rnd = new Random();
+
+            var player_name = players[rnd.Next(0, players.Length)];
+            var scores = rnd.Next(100, 1001);
         }
     }
 }

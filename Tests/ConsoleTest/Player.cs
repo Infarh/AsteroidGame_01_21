@@ -1,52 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ConsoleTest
 {
     class Player
     {
-        //private string _Name;
-        //private string _Surname;
-        //private DateTime _Birthday;
+        public int Id { get; set; }
 
-        //public string Name
-        //{
-        //    get => _Name;
-        //    set => _Name = value;
-        //}
+        public string Name { get; set; }
 
-        //public string Surname
-        //{
-        //    get => _Surname;
-        //    set => _Surname = value;
-        //}
+        public ICollection<Game> Games { get; set; } = new List<Game>();
+    }
 
-        //public DateTime Birthday
-        //{
-        //    get => _Birthday;
-        //    set => _Birthday = value;
-        //}
+    class Game
+    {
+        public int Id { get; set; }
 
-        public string Name { get; /*private*/ set; }
-        public string Surname { /*internal*/ get; set; }
-        public DateTime? Birthday { get; set; } = null;
+        public int Scores { get; set; }
 
-        public Player()
-        {
-            
-        }
-
-        public Player(string Name)
-        {
-            this.Name = Name;
-        }
-
-        public Player(string Name, string Surname)
-            : this(Name)
-        {
-            //this.Name = Name;
-            this.Surname = Surname;
-        }
+        public DateTime Date { get; set; }
     }
 }

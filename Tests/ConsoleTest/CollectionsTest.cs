@@ -146,12 +146,12 @@ namespace ConsoleTest
 
             //decanate.LoadFromFile(data_file);
 
-            var student_list = new List<Student>(Program.GetStudents(data_file));
-            var student_stack = new Stack<Student>(Program.GetStudents(data_file));
-            var student_queue = new Queue<Student>(Program.GetStudents(data_file));
-            var student_set = new HashSet<Student>(Program.GetStudents(data_file));
+            //var student_list = new List<Student>(Program.GetStudents(data_file));
+            //var student_stack = new Stack<Student>(Program.GetStudents(data_file));
+            //var student_queue = new Queue<Student>(Program.GetStudents(data_file));
+            //var student_set = new HashSet<Student>(Program.GetStudents(data_file));
 
-            var student_link_list = new LinkedList<Student>(Program.GetStudents(data_file));
+            //var student_link_list = new LinkedList<Student>(Program.GetStudents(data_file));
 
             //student_list.Contains()
             //student_list.BinarySearch()

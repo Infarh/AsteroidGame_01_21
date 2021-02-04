@@ -22,7 +22,7 @@ namespace AsteroidGame.WebAPI.Controllers
             _db = db;
         }
 
-        [HttpGet]
+        [HttpGet] // api/players
         public IEnumerable<Player> GetAllPlayers()
         {
             //return Enumerable.Range(1, 10)
